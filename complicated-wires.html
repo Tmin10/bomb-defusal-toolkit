@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bomb defusal toolkit for "Keep talking and nobody explodes" game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('#complicated-wires-form input[type=checkbox]').bind('change', function (){
+          red = $("#red").is(':checked');
+          blue = $("#blue").is(':checked');
+          star = $("#star").is(':checked');
+          led = $("#led").is(':checked');
+          action = update_display(red, blue, star, led);
+          switch(action) {
+            case 'C':
+              text = 'Cut the wire';
+              break;
+            case 'D':
+              text = 'Do not cut the wire';
+              break;
+            case 'S':
+              text = 'Cut the wire if the <b>last digit</b> of the serial number is <b>even</b>';
+              break;
+            case 'P':
+              text = 'Cut the wire if the bomb has a <b>parallel port</b>';
+              break;
+            case 'B':
+              text = 'Cut the wire if the bomb has <b>two or more batteries</b>';
+              break;
+            default:
+              text = 'Unknown error';
+          }
+          $('#complicated-wires-display').html(text);
+        });
+        
+        $('#reset-button').bind('click', function(){
+          $('#complicated-wires-form').trigger('reset');
+          $("#red").trigger('change');
+        });
+        
+      });
+      
+      function update_display(red, blue, star, led)
+      {
+        if (red && blue && star && led)
+        {
+          return 'D';
+        }
+        if (red && blue && star && !led)
+        {
+          return 'P';
+        }
+        if (red && blue && !star && led)
+        {
+          return 'S';
+        }
+        if (red && blue && !star && !led)
+        {
+          return 'S';
+        }
+        
+        if (red && !blue && star && led)
+        {
+          return 'B';
+        }
+        if (red && !blue && star && !led)
+        {
+          return 'C';
+        }
+        if (red && !blue && !star && led)
+        {
+          return 'B';
+        }
+        if (red && !blue && !star && !led)
+        {
+          return 'S';
+        }
+        
+        if (!red && blue && star && led)
+        {
+          return 'P';
+        }
+        if (!red && blue && star && !led)
+        {
+          return 'D';
+        }
+        if (!red && blue && !star && led)
+        {
+          return 'P';
+        }
+        if (!red && blue && !star && !led)
+        {
+          return 'S';
+        }
+        
+        if (!red && !blue && star && led)
+        {
+          return 'B';
+        }
+        if (!red && !blue && star && !led)
+        {
+          return 'C';
+        }
+        if (!red && !blue && !star && led)
+        {
+          return 'D';
+        }
+        if (!red && !blue && !star && !led)
+        {
+          return 'C';
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>BOMB DEFUSAL TOOLKIT</h1>
+      <h5>for "Keep talking and nobody explodes" game</h5>
+      <div class="top-menu">
+        <a class="menu-item" href="complicated-wires.html">
+          <img alt="Complicated Wires" src="http://www.bombmanual.com/manual/1/html/img/VennWireComponent.svg">
+          <p>Complicated Wires</p>
+        </a>
+        <a class="menu-item" href="wire-sequences.html">
+          <img alt="Wire Sequences" src="http://www.bombmanual.com/manual/1/html/img/WireSequenceComponent.svg">
+          <p>Wire Sequences</p>
+        </a>
+        <a class="menu-item" href="passwords.html">
+          <img alt="Passwords" src="http://www.bombmanual.com/manual/1/html/img/PasswordComponent.svg">
+          <p>Passwords</p>
+        </a>
+      </div>
+      <div class="content">
+        <form id="complicated-wires-form">
+          <label>
+            <input type="checkbox" id="red">
+            Wire has red coloring
+          </label>
+          <br />
+          <label>
+            <input type="checkbox" id="blue">
+            Wire has blue coloring
+          </label>
+          <br />
+          <label>
+            <input type="checkbox" id="star">
+            Has ★ symbol
+          </label>
+          <br />
+          <label>
+            <input type="checkbox" id="led">
+            LED is on
+          </label>
+          <br />
+          <input type="button" id="reset-button" value="Reset">
+        </form>
+        <div id="complicated-wires-display">Cut the wire</div>
+      </div>
+    </div>
+  </body>
+</html>
